@@ -1,4 +1,4 @@
-;Leonardo Silveira Gonçalves (325852)
+;Leonardo Silveira GonÃ§alves (325852)
 
 ; ==========================
 ; PARAMETROS
@@ -10,27 +10,27 @@ MAT: DB 192
 VET: DAB 2, 5	
 
 ; ==========================
-; DEFINIÇÕES
+; DEFINIÃ‡Ã•ES
 ; ==========================
-ORG 120           ; Endereço base para variáveis (memória de dados)
+ORG 120           ; EndereÃ§o base para variÃ¡veis (memÃ³ria de dados)
 
-PONT: DB 0        ; Ponteiro para a matriz de saída
-OMI:  DB 0        ; Índice da linha (i)
-OMJ:  DB 0        ; Índice da coluna (j)
-TVI:  DB 0        ; Valor temporário v[i]
-TVJ:  DB 0        ; Valor temporário v[j]
+PONT: DB 0        ; Ponteiro para a matriz de saÃ­da
+OMI:  DB 0        ; Ãndice da linha (i)
+OMJ:  DB 0        ; Ãndice da coluna (j)
+TVI:  DB 0        ; Valor temporÃ¡rio v[i]
+TVJ:  DB 0        ; Valor temporÃ¡rio v[j]
 
 ; ==========================
-; INICIALIZAÇÃO
+; INICIALIZAÃ‡ÃƒO
 ; ==========================
-ORG 0             ; Início do código do programa
+ORG 0             ; InÃ­cio do cÃ³digo do programa
 
 LDR A, MAT
-STR A, PONT       ; Inicializa ponteiro da matriz de saída com o endereço base de MATRIZ
+STR A, PONT       ; Inicializa ponteiro da matriz de saÃ­da com o endereÃ§o base de MATRIZ
 
 LDR A, #0	
-STR A, OMI        ; Zera índice de linha (i)
-STR A, OMJ        ; Zera índice de coluna (j)
+STR A, OMI        ; Zera Ã­ndice de linha (i)
+STR A, OMJ        ; Zera Ã­ndice de coluna (j)
 
 ; ==========================
 ; LOOP PRINCIPAL
@@ -60,11 +60,11 @@ igual:
 
 Salva:
     LDR X, PONT
-    STR A, 0, X       ; Armazena resultado na posição atual da matriz
+    STR A, 0, X       ; Armazena resultado na posiÃ§Ã£o atual da matriz
 
     LDR A, PONT	
     ADD A, #1
-    STR A, PONT       ; Avança ponteiro da matriz de saída
+    STR A, PONT       ; AvanÃ§a ponteiro da matriz de saÃ­da
     JMP sub_rotJ	
 
 sub_rotI:
@@ -94,4 +94,4 @@ sub_rotJ:
 ; ==========================
 
 fim:
-HLT               ; Termina execução
+HLT               ; Termina execuÃ§Ã£o
