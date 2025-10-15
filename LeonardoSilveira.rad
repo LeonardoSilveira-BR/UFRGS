@@ -1,0 +1,97 @@
+;Leonardo Silveira Gonçalves (325852)
+
+; ==========================
+; PARAMETROS
+; ==========================
+ORG 180
+       		
+OM: DB 2 
+MAT: DB 192   	
+VET: DAB 2, 5	
+
+; ==========================
+; DEFINIÇÕES
+; ==========================
+ORG 120           ; Endereço base para variáveis (memória de dados)
+
+PONT: DB 0        ; Ponteiro para a matriz de saída
+OMI:  DB 0        ; Índice da linha (i)
+OMJ:  DB 0        ; Índice da coluna (j)
+TVI:  DB 0        ; Valor temporário v[i]
+TVJ:  DB 0        ; Valor temporário v[j]
+
+; ==========================
+; INICIALIZAÇÃO
+; ==========================
+ORG 0             ; Início do código do programa
+
+LDR A, MAT
+STR A, PONT       ; Inicializa ponteiro da matriz de saída com o endereço base de MATRIZ
+
+LDR A, #0	
+STR A, OMI        ; Zera índice de linha (i)
+STR A, OMJ        ; Zera índice de coluna (j)
+
+; ==========================
+; LOOP PRINCIPAL
+; ==========================
+Procura:
+    LDR X, OMI
+    LDR A, VET, X     ; Carrega v[i] (indexado)
+    STR A, TVI        ; Guarda valor temporariamente em TVI
+
+    LDR X, OMJ
+    LDR B, VET, X     ; Carrega v[j] (indexado)
+    STR B, TVJ        ; Guarda valor temporariamente em TVJ
+
+    LDR A, OMI
+    SUB A, OMJ        ; Compara se i == j
+    JZ igual          ; Se forem iguais, vai para "igual"
+
+    ; Caso i ? j:
+    LDR A, TVI
+    ADD A, TVI        ; Calcula 2*v[i]
+    SUB A, TVJ        ; Resultado: (2*v[i] - v[j])
+    JMP Salva         ; Vai guardar esse resultado
+
+igual:
+    LDR A, TVI		
+    ADD A, TVI        ; Se i == j, guarda 2*v[i]
+
+Salva:
+    LDR X, PONT
+    STR A, 0, X       ; Armazena resultado na posição atual da matriz
+
+    LDR A, PONT	
+    ADD A, #1
+    STR A, PONT       ; Avança ponteiro da matriz de saída
+    JMP sub_rotJ	
+
+sub_rotI:
+    LDR A, OMI         ; A = i
+    ADD A, #1          ; i = i + 1
+    STR A, OMI 
+    
+    SUB A, OM           ; A = (i+1) - 2
+    JZ fim
+    
+    LDR B, #0
+    STR B, OMJ
+    JMP Procura
+
+sub_rotJ:
+    LDR B, OMJ         ; B = j
+    ADD B, #1          ; j = j + 1  
+    STR B, OMJ
+    
+    SUB B, OM           ; B = (j+1) - 2
+    JZ sub_rotI
+    JMP Procura
+
+
+; ==========================
+; FIM DO PROGRAMA
+; ==========================
+
+fim:
+HLT               ; Termina execução
